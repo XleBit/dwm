@@ -1,4 +1,5 @@
 /* See LICENSE file for copyright and license details. */
+
 /* appearance */
 #include "layouts.c"
 
@@ -15,11 +16,11 @@ static const int topbar             = 1;     /* 0 means bottom bar */
 #define ICONSPACING 5                           /* space between icon and title */
 static const char *fonts[]          = { "xos4terminus:size=12:antialias=true" };
 static const char dmenufont[]       =   "xos4terminus:size=12:antialias=true" ;
-static const char col_gray1[]       = "#111011"; /* def 222222 || 101010 || 282828 || 111011*/
+static const char col_gray1[]       = "#201A24"; /* def 222222 || 101010 || 282828 || 111011*/
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#888888";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#432a3d"; /* def 005577 ; Random color selection: 432A3D 478061 500077 23a99b 00cd00 3cb371 cd6500 */
+static const char col_gray4[]       = "#EEEEEE";
+static const char col_cyan[]        = "#4D3066"; /* def 005577 ; Random color selection: 432A3D 478061 500077 23a99b 00cd00 3cb371 cd6500 */
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
     [SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
@@ -36,10 +37,11 @@ static const Rule rules[] = {
      */
     /* class      instance    title       tags mask     isfloating   monitor */
     { "Gimp",     NULL,       NULL,       0,            1,           -1 },
-    { "pcmanfm-qt","pcmanfm-qt",NULL,     0,            1,           -1 },
+    { "Thunar",   "thunar",   NULL,       0,            1,           -1 },
     { "Steam",    NULL,       NULL,       0,            1,           -1 },
     { "pcsx2",    "Pcsx2",    NULL,       0,            1,           -1 },
     { "vlc",      "vlc",      NULL,       0,            1,           -1 },
+	{ "mpv",      "gl",       NULL,       0,            1,           -1 },
 };
 
 /* layout(s) */
@@ -71,16 +73,18 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, "-s",NULL };
 static const char *termcmd[]  = { "alacritty",   NULL };
-static const char *webcmd[]   = { "qutebrowser",   NULL };
-static const char *filecmd[]  = { "pcmanfm-qt",  NULL };
+static const char *webcmd[]   = { "librewolf",   NULL };
+static const char *qutecmd[]  = { "qutebrowser", NULL };
+static const char *filecmd[]  = { "thunar",  NULL };
 
 static Key keys[] = {
     /* modifier                     key        function        argument */
     { MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
     { MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd  } },
     { MODKEY,                       XK_w,      spawn,          {.v = webcmd   } },
+    { MODKEY|ShiftMask,             XK_w,      spawn,          {.v = qutecmd  } },
     { MODKEY,                       XK_e,      spawn,          {.v = filecmd  } },
     { MODKEY,                       XK_b,      togglebar,      {0} },
     { MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
